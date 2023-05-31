@@ -1,6 +1,14 @@
+import HandIcon from './HandIcon';
+
 function HandButton({ value, onClick }) {
   const handleClick = () => onClick(value);
-  return <button>여기에 HandIcon을 배치해주세요</button>;
+  return (
+    <button onClick={handleClick}>
+    <HandIcon value={value}  ></HandIcon>
+    </button>
+
+  )
+  
 }
 
 export default HandButton;

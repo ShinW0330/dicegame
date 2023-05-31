@@ -5,7 +5,6 @@ function App() {
   return (
     <div>
       <HandButton value="rock" onClick={handleClick} />
-      ss
       <HandButton value="scissor" onClick={handleClick} />
       <HandButton value="paper" onClick={handleClick} />
     </div>
