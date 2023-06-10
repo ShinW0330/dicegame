@@ -11,7 +11,6 @@ function getResult(me, other) {
   if (comparison > 0) return '승리';
   if (comparison < 0) return '패배';
   return '무승부';
-  
 }
 
 
