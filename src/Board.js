@@ -1,88 +1,50 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import Button from './Button';
-import HandButton from './HandButton';
-import HandIcon from './HandIcon';
-import { compareHand, generateRandomHand } from './utils';
+import Dice from './Dice';
 
-
-// 두 카드 승리 비교 
-function getResult(me, other) {
-  const comparison = compareHand(me, other);
-  if (comparison > 0) return '승리';
-  if (comparison < 0) return '패배';
-  return '무승부';
+function random(n){
+  return Math.ceil(Math.random() * n);
 }
 
+function Board({name, color}) {
+  // 숫자 state 설정
+  const [num, setNum] = useState(1);
+  const [sum, setSum] = useState(0);
+  const [gameHistory, setGameHistory] = useState([]);
+  //const [dot] = useState("");
+  //const [reset, setReset] = useState(1);
 
-
-function Board() {
-  const [hand, setHand] = useState("rock");
-  const [otherHand, setOtherHand] = useState("rock");
-  const [gameHistory , setGameHistory] = useState([]);
-  const [meSocre, setMeScore] = useState(0);
-  const [otherSocre, setOtherScore] = useState(0);
-  const [bet, setBet] = useState(1);
-  
-
-  // 가위 바위 보 선택 
-  const handleButtonClick = (nextHand) => {
-    const nextOtherHand = generateRandomHand();
-    const nextHistoryItem = getResult(nextHand, nextOtherHand);
-    console.log(nextHand);
-    console.log("nextOther = " + nextOtherHand);
-    const comparison = compareHand(nextHand, nextOtherHand)
-    setHand(nextHand);
-    setOtherHand(nextOtherHand);
-    setGameHistory([...gameHistory, nextHistoryItem]);
-  
-    if(comparison > 0) setMeScore(meSocre +bet);
-    if(comparison < 0) setOtherScore(otherSocre +bet);
-    console.log(gameHistory);
+  const handleRollClick = () => {
+    const nextNum = random(6);
+    setNum(nextNum);
+    setSum(sum + nextNum);
+    //console.log(sum);
+    const gameHistoryCopy = [...gameHistory];
+    gameHistoryCopy.push(nextNum);
+    setGameHistory(gameHistoryCopy)
   };
-  
-  
-  // 초기화 
   const handleClearClick = () => {
-    setHand('rock');
-    setOtherHand('rock');
+    setNum(1); 
+    setSum(0); 
     setGameHistory([]);
-    setMeScore(0);
-    setOtherScore(0);
-    setBet(1);
-  };
-  
-  // 배점 설정 
-  const handleBetChange = (event) => {
-    const chkValue = event.target.value; // string 타입 
-    //console.log(typeof chkValue);
-    const betNumber = Number(chkValue);
-    setBet(betNumber);
+
   }
 
-  
   return (
-
-
+    <div>
       <div>
-        <Button onClick={handleClearClick}>처음부터</Button>
-        <div>
-          {meSocre} : {otherSocre}
-        </div>
-      <div>
-        <HandIcon value={hand}></HandIcon>
-        VS
-        <HandIcon value={otherHand}></HandIcon>
-        <div>
-          <input type="number" value={bet} min={1} max={9} onChange={handleBetChange} />
-        </div>
-        <p>승부 기록 : {gameHistory.join(',')}</p>
+        <Button onClick ={handleRollClick}>던지기</Button>
+        <Button onClick ={handleClearClick}>처음부터</Button>
       </div>
-      
-      <HandButton value="rock" onClick={handleButtonClick} />
-      <HandButton value="scissor" onClick={handleButtonClick} />
-      <HandButton value="paper" onClick={handleButtonClick} />
+        <h2>{name}</h2>
+      <Dice color={color} num={num}></Dice>
+      <h2>총점</h2>
+      <p>{sum}</p>
+      <h2>기록</h2>
+      <p>{gameHistory.join(', ')}</p>
     </div>
   );
 }
 
 export default Board;
+
