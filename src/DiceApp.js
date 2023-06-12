@@ -8,26 +8,15 @@ function random(n){
 
 function DiceApp(){
   // 숫자 state 설정
-  const [num, setNum] = useState(1);
-  const [sum, setSum] = useState(0);
-  const [gameHistory, setGameHistory] = useState([]);
-  const [otherNum, setOtherNum] = useState(1);
-  const [otherSum, setOtehrSum] = useState(0);
-  const [otherGameHistory, setOtherGameHistory] = useState([]);
+  const [gameMyHistory, setGameMyHistory] = useState([]);
+  const [gmaeOtherHistory, setGameOtherHistory] = useState([]);
 
     const handleRollClick = () => {
-    const nextNum = random(6);
+    const nextMyNum = random(6);
     const nextOtherNum = random(6);
-    const gameHistoryCopy = [...gameHistory];
-    setNum(nextNum);
-    setSum(sum + nextNum);
-    gameHistoryCopy.push(nextNum);
-    setGameHistory(gameHistoryCopy)
-    
-    
-    setOtherNum(nextOtherNum);
-    setOtehrSum(otherSum + nextOtherNum);
-    setOtherGameHistory([...otherGameHistory, nextOtherNum]);
+  
+    setGameMyHistory([...gameMyHistory, nextMyNum])
+    setGameOtherHistory([...gmaeOtherHistory, nextOtherNum]);
 
     /*  ->  setOtherGameHistory([...otherGameHistory, nextOtherNum]); 와 같음
     const otherGameHistoryCopy = [...otherGameHistory];
@@ -36,14 +25,9 @@ function DiceApp(){
     */
   };
 
-  const handleClearClick = () => {
-    setNum(1);
-    setSum(0); 
-    setGameHistory([]);
-
-    setOtherNum(1); 
-    setOtehrSum(0);
-    setOtherGameHistory([]);
+  const handleClearClick = () => { 
+    setGameMyHistory([]);
+    setGameOtherHistory([]);
 
   }
   return(
@@ -53,8 +37,8 @@ function DiceApp(){
         <Button onClick ={handleClearClick}>처음부터</Button> 
       </div>
       <div>
-        <Board name="나" color="blue" num={num} sum={sum} gameHistory={gameHistory}></Board>
-        <Board name="상대" color="red" num={otherNum} sum={otherSum} gameHistory={otherGameHistory}></Board>
+        <Board name="나" color="blue" gameHistory={gameMyHistory}></Board>
+        <Board name="상대" color="red" gameHistory={gmaeOtherHistory}></Board>
       </div>
     </div>
   )
