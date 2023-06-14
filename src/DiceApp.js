@@ -32,8 +32,8 @@ function DiceApp(){
   return(
     <div>
       <div>
-        <Button onClick ={handleRollClick}>던지기</Button>
-        <Button onClick ={handleClearClick}>처음부터</Button> 
+        <Button color="blue" onClick ={handleRollClick}>던지기</Button>
+        <Button color="red"  onClick ={handleClearClick}>처음부터</Button> 
       </div>
       <div>
         <Board name="나" color="blue" gameHistory={gameMyHistory}></Board>
