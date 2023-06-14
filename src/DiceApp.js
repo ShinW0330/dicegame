@@ -28,7 +28,6 @@ function DiceApp(){
   const handleClearClick = () => { 
     setGameMyHistory([]);
     setGameOtherHistory([]);
-
   }
   return(
     <div>
